@@ -15,7 +15,6 @@ public interface IProductoService {
 	public void delete(long id);
 	public Producto save(Producto producto);
 	
-	// Podríamos haberlo llamado findAll pero para no crear confusión lo llamos de forma diferente
 	// Recupera todos los productos sin paginar ni ordenar
-	public List<Producto> dameProductos();
+	public List<Producto> findAll(); // Lo volvemos a cambiar porque así es como lo vamos a ver en empresa
 }
