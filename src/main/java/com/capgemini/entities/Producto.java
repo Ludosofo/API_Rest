@@ -58,7 +58,9 @@ public class Producto implements Serializable {
 	// Muchos productos pueden tener una presentación
 	// El fetch Lazy no hace las comprobaciones todo el rato
 	// Cascade para que los datos se transmitan al resto
-	@ManyToOne(fetch= FetchType.LAZY, cascade = CascadeType.PERSIST)
+	
+	// @ManyToOne(fetch= FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch= FetchType.LAZY)
 	private Presentacion presentacion;
 }
 

@@ -40,7 +40,8 @@ public class Presentacion implements Serializable {
 	
 	// mapped hace que la relación este hecha en base al campo presentacion en la entidad producto
 	// Como es lazy no trae automaticamente la presentacion constantemente
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "presentacion")
+	// @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "presentacion")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "presentacion")
 	private List<Producto> productos;
 	
 }

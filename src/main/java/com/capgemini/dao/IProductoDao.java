@@ -32,6 +32,15 @@ public interface IProductoDao extends JpaRepository<Producto, Long>{
 			countQuery = "select count(p) from Producto p left join p.presentacion" )
 	public Page<Producto> findAll(Pageable pageable);
 	
+	/***
+	 * 
+	 * ESTO ES PROPIO Y NO CONFIO EN EL
+	 * 
+	@Query(value= "select p from Producto p left join fetch p.presentacion")
+	public List<Producto> findAll();
+	***/
+	
+	
 	// Esto es como $id por fin podemos especificar las coincidencias que buscamos
 	// ¿Como haremos un like con esto?
 	@Query(value = "select p from Producto p left join fetch p.presentacion where p.id = :id")
