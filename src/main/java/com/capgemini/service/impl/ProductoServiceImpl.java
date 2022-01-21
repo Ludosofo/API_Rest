@@ -56,5 +56,11 @@ public class ProductoServiceImpl implements IProductoService {
 		producto.setPresentacion(presentacion);
 		return daoProducto.save(producto);
 	}
+
+	@Override
+	public List<Producto> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
