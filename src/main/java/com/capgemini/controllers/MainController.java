@@ -103,14 +103,19 @@ public class MainController {
 	}
 	
 	
+	// Todas etiquetas tienen una función
+	// Valid = Valida contra las restricciones puestas en la entidad de Producto
+	// BindingResult = Vincula resultados de la validación / Status 200, 201, 403, 404, 500
 	// 
 	@PostMapping
 	public ResponseEntity<Map<String, Object>> guardar(@Valid @RequestBody Producto producto, BindingResult result){
 		
-		Map<String, Object> resultado = new HashMap<>();
 		
+		// Definimos variables iniciales que queremos obtener
+		Map<String, Object> responseAsMap = new HashMap<>();
 		ResponseEntity<Map<String, Object>> responseEntity = null;
 		
+		// Lista de errores que guardaremos
 		List<String> errores = null;
 		
 		if(result.hasErrors()){
@@ -118,8 +123,17 @@ public class MainController {
 			for( ObjectError error : result.getAllErrors()) {
 				errores.add(error.getDefaultMessage());
 			}
+			
+			responseAsMap.put("errores", errores);
+			responseEntity = new ResponseEntity<Map<String,Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+			return responseEntity;
 		}
+		
 		return responseEntity;
+		// Tras haber pasado por aquí tenemos toda una recopilación de errores
+		// Ahora hacemos la respuesta de datos
+		// Control + Space y detecta cual es el return para ponerse solo
+
 	}
 	// Todo esto con el objetivo de lanzar el postman
 }
