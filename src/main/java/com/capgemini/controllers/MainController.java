@@ -7,7 +7,9 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -127,6 +129,28 @@ public class MainController {
 			responseAsMap.put("errores", errores);
 			responseEntity = new ResponseEntity<Map<String,Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
 			return responseEntity;
+		}
+		
+		// Como el anterior return de errores saca del metodo procedemos a poner el añadido de datos
+		// Como ya tenemos el metodo Autowired estamos conectados a la capa de servicio
+		
+		try {
+			// Obtenemos el producto devuelto por la base de datos
+			Producto productoDB = productoService.save(producto);
+			if(productoDB != null) {
+				responseAsMap.put("producto", productoDB);
+				responseAsMap.put("mensaje", "El producto con id "+ productoDB.getId() +" se ha guardado exitosamente");
+				responseEntity = new ResponseEntity <Map<String, Object>>(responseAsMap, HttpStatus.OK);
+			}else {
+				responseAsMap.put("mensaje", "No hemos introducido datos");
+				responseEntity = new ResponseEntity <Map<String, Object>>(responseAsMap, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} catch (DataAccessException e) {
+			// TODO: handle exception
+			responseAsMap.put("mensaje", "Error fatal: "+e.getMessage());
+			responseAsMap.put("error", e.getMostSpecificCause());
+			responseEntity = new ResponseEntity <Map<String, Object>>(responseAsMap, HttpStatus.INTERNAL_SERVER_ERROR);
+			
 		}
 		
 		return responseEntity;
